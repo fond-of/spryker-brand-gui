@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <brand>
+        <label>Brand</label>
+        <title>Brand</title>
+        <bundle>brand-gui</bundle>
+        <controller>brand</controller>
+        <action>index</action>
+        <icon>fa-copyright</icon>
+        <pages>
+            <brand-create>
+                <label>Create Brand</label>
+                <title>Create Brand</title>
+                <bundle>brand-gui</bundle>
+                <controller>brand</controller>
+                <action>create</action>
+                <visible>0</visible>
+            </brand-create>
+
+            <brand-edit>
+                <label>Edit Brand</label>
+                <title>Edit Brand</title>
+                <bundle>brand-gui</bundle>
+                <controller>brand</controller>
+                <action>update</action>
+                <visible>0</visible>
+            </brand-edit>
+        </pages>
+    </brand>
+</config>
