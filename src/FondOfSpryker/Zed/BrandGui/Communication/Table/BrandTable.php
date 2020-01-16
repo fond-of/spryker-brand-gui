@@ -2,6 +2,8 @@
 
 namespace FondOfSpryker\Zed\BrandGui\Communication\Table;
 
+use FondOfSpryker\Zed\BrandGui\Communication\Controller\BrandAbstractController;
+use FondOfSpryker\Zed\BrandGui\Communication\Controller\RoutingConstants;
 use Orm\Zed\Brand\Persistence\FosBrandQuery;
 use Orm\Zed\Brand\Persistence\Map\FosBrandTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -12,8 +14,8 @@ class BrandTable extends AbstractTable
 {
     public const ACTIONS = 'Actions';
     public const URL_PARAMETER_ID_BRAND = 'id-brand';
-    public const URL_UPDATE_BRAND = '/brand-gui/brand/update';
-    public const URL_DELETE_BRAND = '/brand-gui/brand/delete';
+    public const URL_BRAND_EDIT = RoutingConstants::URL_EDIT;
+    public const URL_BRAND_DELETE = RoutingConstants::URL_DELETE;
 
     /**
      * @var \Orm\Zed\Brand\Persistence\Base\FosBrandQuery
@@ -70,13 +72,13 @@ class BrandTable extends AbstractTable
         $query = $this->fosBrandQuery;
         $queryResults = $this->runQuery($query, $config);
 
-        foreach ($queryResults as $queryResult) {
+        foreach ($queryResults as $item) {
             $results[] = [
-                FosBrandTableMap::COL_ID_BRAND => $queryResult[FosBrandTableMap::COL_ID_BRAND],
-                FosBrandTableMap::COL_NAME => $queryResult[FosBrandTableMap::COL_NAME],
-                FosBrandTableMap::COL_URL => $queryResult[FosBrandTableMap::COL_URL],
-                FosBrandTableMap::COL_IS_ACTIVE => $this->createStatusLabel($queryResult[FosBrandTableMap::COL_URL]),
-                self::ACTIONS => implode(' ', $this->createTableActions($queryResult)),
+                FosBrandTableMap::COL_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND],
+                FosBrandTableMap::COL_NAME => $item[FosBrandTableMap::COL_NAME],
+                FosBrandTableMap::COL_URL => $item[FosBrandTableMap::COL_URL],
+                FosBrandTableMap::COL_IS_ACTIVE => $this->createStatusLabel($item[FosBrandTableMap::COL_URL]),
+                self::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
         }
 
@@ -88,23 +90,25 @@ class BrandTable extends AbstractTable
      *
      * @return array
      */
-    protected function createTableActions(array $queryResult): array
+    protected function buildLinks(array $item): array
     {
         $buttons = [];
 
-        $buttons[] = $this->generateEditButton(
-            Url::generate(static::URL_UPDATE_BRAND, [
-                static::URL_PARAMETER_ID_BRAND => $queryResult[FosBrandTableMap::COL_ID_BRAND],
-            ]),
-            'Edit'
+        $editUrl = Url::generate(
+            static::URL_BRAND_EDIT,
+            [
+                BrandAbstractController::URL_PARAM_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND],
+            ]
+        );
+        $deleteUrl = Url::generate(
+            static::URL_BRAND_DELETE,
+            [
+                BrandAbstractController::URL_PARAM_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND],
+            ]
         );
 
-        $buttons[] = $this->generateRemoveButton(
-            Url::generate(static::URL_DELETE_BRAND, [
-                static::URL_PARAMETER_ID_BRAND => $queryResult[FosBrandTableMap::COL_ID_BRAND],
-            ]),
-            'Delete'
-        );
+        $buttons[] = $this->generateEditButton($editUrl, 'Edit Brand');
+        $buttons[] = $this->generateRemoveButton($deleteUrl, 'Remove Brand');
 
         return $buttons;
     }

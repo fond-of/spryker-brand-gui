@@ -4,25 +4,24 @@
         <label>Brand</label>
         <title>Brand</title>
         <bundle>brand-gui</bundle>
-        <controller>brand</controller>
+        <controller>index</controller>
         <action>index</action>
         <icon>fa-copyright</icon>
         <pages>
             <brand-create>
-                <label>Create Brand</label>
-                <title>Create Brand</title>
+                <label>Add Brand</label>
+                <title>Add Brand</title>
                 <bundle>brand-gui</bundle>
-                <controller>brand</controller>
-                <action>create</action>
+                <controller>create</controller>
+                <action>index</action>
                 <visible>0</visible>
             </brand-create>
-
             <brand-edit>
                 <label>Edit Brand</label>
                 <title>Edit Brand</title>
                 <bundle>brand-gui</bundle>
-                <controller>brand</controller>
-                <action>update</action>
+                <controller>edit</controller>
+                <action>index</action>
                 <visible>0</visible>
             </brand-edit>
         </pages>

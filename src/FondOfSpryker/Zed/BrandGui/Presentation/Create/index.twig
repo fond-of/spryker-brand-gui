@@ -1,0 +1,47 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Create a Brand' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ parent() }}
+    {{ backActionButton(url('/brand-gui'), 'Back to Brands' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(aggregateForm) }}
+
+    {{ tabs(
+        brandAggregationTabs,
+        {
+            'aggregateForm': aggregateForm,
+            'brandForm': aggregateForm.brand,
+            'brandCustomerRelationForm': aggregateForm.brandCustomerRelation,
+            'availableCustomerRelationTabs': availableCustomerRelationTabs,
+            'assignedCustomerRelationTabs': assignedCustomerRelationTabs,
+            'availableCustomerTable': availableCustomerTable,
+            'assignedCustomerTable': assignedCustomerTable
+        }
+    ) }}
+
+    {{ form_end(aggregateForm) }}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/fond-of-spryker-zed-brand-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/fond-of-spryker-zed-brand-assign.js"></script>
+{% endblock %}
+
+

@@ -1,0 +1,31 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Overview of Brand' %}
+{% set widget_subtitle = 'List of brands' %}
+
+{% block section_title widget_title | trans %}
+
+{% block action %}
+    {{ parent() }}
+    {{ createActionButton('/brand-gui/create', 'Create Brand' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_title -%}
+
+            <h5>{{ widget_subtitle | trans }}</h5>
+
+        {%- endblock %}
+
+        {% block widget_content %}
+
+            {{ brandTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

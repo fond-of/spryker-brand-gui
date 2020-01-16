@@ -1,0 +1,16 @@
+{% block content %}
+    {# form_row(brandCustomerRelationForm.products_upload) #}
+    {{ tabs(
+        availableCustomerRelationTabs,
+        {
+            'availableCustomerTable': availableCustomerTable
+        }
+    ) }}
+    <hr/>
+    {{ tabs(
+        assignedCustomerRelationTabs,
+        {
+            'assignedCustomerTable': assignedCustomerTable
+        }
+    ) }}
+{% endblock %}

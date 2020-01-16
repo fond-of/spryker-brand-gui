@@ -23,18 +23,12 @@ class BrandFormDataProvider
     /**
      * @param int $idBrand
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\BrandTransfer
      */
-    public function getData(int $idBrand): array
+    public function getData(int $idBrand): BrandTransfer
     {
         $brandTransfer = (new BrandTransfer())->setIdBrand($idBrand);
 
-        $brandTransfer = $this->brandFacade->findBrandById($brandTransfer);
-
-        if ($brandTransfer === null) {
-            return [];
-        }
-
-        return $brandTransfer->toArray();
+        return $this->brandFacade->findBrandById($brandTransfer);
     }
 }

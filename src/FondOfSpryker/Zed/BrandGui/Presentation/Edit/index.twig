@@ -1,0 +1,11 @@
+{% extends '@ProductListGui/Create/index.twig' %}
+
+{% set widget_title = 'Edit Brand' | trans ~ ': ' ~ aggregateForm.brand.idBrand.vars.value %}
+
+{% block action %}
+    {{ parent() }}
+    {% if idBrand is defined %}
+        {{ viewActionButton(url('/brand-gui/export', {'id-brand': idBrand}), 'Export' | trans) }}
+        {{ removeActionButton(url('/brand-gui/delete', {'id-brand': idBrand}), 'Remove Brand' | trans) }}
+    {% endif %}
+{% endblock %}
