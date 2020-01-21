@@ -78,7 +78,7 @@ abstract class AbstractCustomerTable extends AbstractTable
      */
     protected function getTableUrl(TableConfiguration $config): string
     {
-        $tableUrl = $config->getUrl() ?? $this->defaultUrl;
+        $tableUrl = ($config->getUrl() === null) ? $this->defaultUrl : $config->getUrl();
 
         if ($this->getIdBrand()) {
             $tableUrl = Url::generate($tableUrl, [BrandAbstractController::URL_PARAM_ID_BRAND => $this->getIdBrand()]);

@@ -5,6 +5,7 @@ namespace FondOfSpryker\Zed\BrandGui\Communication\Controller;
 use Generated\Shared\Transfer\BrandTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -53,6 +54,54 @@ class EditController extends BrandAbstractController
         )->build();
 
         return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function availableCustomerTableAction(): JsonResponse
+    {
+        $availableCustomerTable = $this->getFactory()->createAvailableCustomerTable();
+
+        return $this->jsonResponse(
+            $availableCustomerTable->fetchData()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedCustomerTableAction(): JsonResponse
+    {
+        $assignedCustomerTable = $this->getFactory()->createAssignedCustomerTable();
+
+        return $this->jsonResponse(
+            $assignedCustomerTable->fetchData()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function availableCompanyTableAction(): JsonResponse
+    {
+        $availableCompanyTable = $this->getFactory()->createAvailableCompanyTable();
+
+        return $this->jsonResponse(
+            $availableCompanyTable->fetchData()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedCompanyTableAction(): JsonResponse
+    {
+        $assignedCompanyTable = $this->getFactory()->createAssignedCompanyTable();
+
+        return $this->jsonResponse(
+            $assignedCompanyTable->fetchData()
+        );
     }
 
     /**
