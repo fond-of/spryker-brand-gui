@@ -41,13 +41,17 @@ class BrandCustomerRelationFormDataProvider
         }
 
         $brandTransfer = (new BrandTransfer())->setIdBrand($idBrand);
-        $brandCustomerRelation = $this->brandFacade
-            ->findBrandById($brandTransfer)
-            ->getBrandCustomerRelation();
+        $brandTransfer = $this->brandFacade
+            ->findBrandById($brandTransfer);
 
-        $brandCustomerRelation->setIdBrand($brandTransfer->getIdBrand());
+        $brandCustomerRelationTransfer = $brandTransfer->getBrandCustomerRelation();
 
-        return $brandCustomerRelation;
+        if ($brandCustomerRelationTransfer === null) {
+            return new BrandCustomerRelationTransfer();
+        }
+
+        return $brandCustomerRelationTransfer
+            ->setIdBrand($brandTransfer->getIdBrand());
     }
 
     /**

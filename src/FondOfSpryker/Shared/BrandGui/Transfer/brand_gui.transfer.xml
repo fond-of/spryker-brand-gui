@@ -6,9 +6,13 @@
     <transfer name="BrandAggregateForm">
         <property name="customerIdsToBeDeAssigned" type="string" />
         <property name="customerIdsToBeAssigned" type="string" />
+        <property name="companyIdsToBeDeAssigned" type="string" />
+        <property name="companyIdsToBeAssigned" type="string" />
         <property name="brandCustomerRelation" type="BrandCustomerRelation"/>
+        <property name="brandCompanyRelation" type="BrandCompanyRelation"/>
         <property name="brand" type="Brand"/>
         <property name="assignedCustomerIds" type="string"/>
+        <property name="assignedCompanyIds" type="string"/>
     </transfer>
 
 </transfers>

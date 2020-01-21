@@ -3,20 +3,30 @@
 namespace FondOfSpryker\Zed\BrandGui\Communication;
 
 use FondOfSpryker\Zed\BrandGui\BrandGuiDependencyProvider;
+use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabsExpander;
+use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabsExpanderInterface;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\BrandAggregateFormType;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\BrandForm;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandAggregateFormDataProvider;
+use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandCompanyRelationFormDataProvider;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandCustomerRelationFormDataProvider;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandFormDataProvider;
+use FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedCompanyTable;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedCustomerTable;
+use FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableCompanyTable;
+use FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableCustomerTable;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\BrandTable;
+use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AssignedCompanyRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AssignedCustomerRelationTabs;
+use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AvailableCompanyRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AvailableCustomerRelationTabs;
+use FondOfSpryker\Zed\BrandGui\Communication\Tabs\BrandEditAggregationTabs;
 use FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToBrandFacadeInterface;
+use FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToCompanyFacadeInterface;
 use FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToCustomerFacadeInterface;
-use FondOfSpryker\Zed\ProductListGui\Communication\Table\AvailableCustomerTable;
 use Generated\Shared\Transfer\BrandAggregateFormTransfer;
 use Orm\Zed\Brand\Persistence\FosBrandQuery;
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -66,6 +76,16 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @throws
+     *
+     * @return \FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToCompanyFacadeInterface
+     */
+    public function getCompanyFacade(): BrandGuiToCompanyFacadeInterface
+    {
+        return $this->getProvidedDependency(BrandGuiDependencyProvider::FACADE_COMPANY);
+    }
+
+    /**
      * @return \FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandFormDataProvider
      */
     public function createBrandFormDataProvider(): BrandFormDataProvider
@@ -85,7 +105,7 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\ProductListGui\Communication\Table\AvailableCustomerTable
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableCustomerTable
      */
     public function createAvailableCustomerTable(): AvailableCustomerTable
     {
@@ -120,13 +140,49 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableCompanyTable
+     */
+    public function createAvailableCompanyTable(): AvailableCompanyTable
+    {
+        return new AvailableCompanyTable($this->getCompanyPropelQuery());
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createAvailableCompanyRelationTabs(): TabsInterface
+    {
+        return new AvailableCompanyRelationTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createAssignedCompanyRelationTabs(): TabsInterface
+    {
+        return new AssignedCompanyRelationTabs();
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandCompanyRelationFormDataProvider
+     */
+    public function createBrandCompanyRelationFormDataProvider(): BrandCompanyRelationFormDataProvider
+    {
+        return new BrandCompanyRelationFormDataProvider(
+            $this->getBrandFacade(),
+            $this->getCompanyFacade()
+        );
+    }
+
+    /**
      * @return \FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandAggregateFormDataProvider
      */
     public function createBrandAggregateFormDataProvider(): BrandAggregateFormDataProvider
     {
         return new BrandAggregateFormDataProvider(
             $this->createBrandFormDataProvider(),
-            $this->createBrandCustomerRelationFormDataProvider()
+            $this->createBrandCustomerRelationFormDataProvider(),
+            $this->createBrandCompanyRelationFormDataProvider()
         );
     }
 
@@ -162,10 +218,36 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @throws
+     *
+     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     */
+    public function getCompanyPropelQuery(): SpyCompanyQuery
+    {
+        return $this->getProvidedDependency(BrandGuiDependencyProvider::PROPEL_QUERY_COMPANY);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedCompanyTable
+     */
+    public function createAssignedCompanyTable(): AssignedCompanyTable
+    {
+        return new AssignedCompanyTable($this->getCompanyPropelQuery());
+    }
+
+    /**
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
-    public function createProductListEditAggregationTabs(): TabsInterface
+    public function createBrandEditAggregationTabs(): TabsInterface
     {
-        return new Brand($this->createProductListCreateAggregationTabsExpander());
+        return new BrandEditAggregationTabs($this->createBrandCreateAggregationTabsExpander());
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabsExpanderInterface
+     */
+    public function createBrandCreateAggregationTabsExpander(): BrandCreateAggregationTabsExpanderInterface
+    {
+        return new BrandCreateAggregationTabsExpander();
     }
 }

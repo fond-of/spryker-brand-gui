@@ -10,11 +10,11 @@ class AssignedCustomerRelationTabs extends AbstractTabs
 {
     public const ASSIGNED_CUSTOMER_TAB_NAME = 'assigned_customer';
     public const ASSIGNED_CUSTOMER_TAB_TITLE = 'Customers in this list';
-    public const ASSIGNED_CUSTOMER_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/assigned-customer-table.twig';
+    public const ASSIGNED_CUSTOMER_TAB_TEMPLATE = '@BrandGui/_partials/_tables/assigned-customer-table.twig';
 
     public const DEASSIGNED_CUSTOMER_TAB_NAME = 'deassignment_customer';
     public const DEASSIGNED_CUSTOMER_TAB_TITLE = 'Customers to be deassigned';
-    public const DEASSIGNED_CUSTOMER_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/deassignment-customer-table.twig';
+    public const DEASSIGNED_CUSTOMER_TAB_TEMPLATE = '@BrandGui/_partials/_tables/deassignment-customer-table.twig';
 
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer

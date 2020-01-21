@@ -1,0 +1,15 @@
+{% block content %}
+    {{ tabs(
+        availableCompanyRelationTabs,
+        {
+            'availableCompanyTable': availableCompanyTable
+        }
+    ) }}
+    <hr/>
+    {{ tabs(
+        assignedCompanyRelationTabs,
+        {
+            'assignedCompanyTable': assignedCompanyTable
+        }
+    ) }}
+{% endblock %}

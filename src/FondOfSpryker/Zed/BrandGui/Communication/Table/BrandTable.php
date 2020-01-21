@@ -12,53 +12,24 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class BrandTable extends AbstractTable
 {
-    public const ACTIONS = 'Actions';
-    public const URL_PARAMETER_ID_BRAND = 'id-brand';
+    protected const COLUMN_ID_BRAND = FosBrandTableMap::COL_ID_BRAND;
+    protected const COLUMN_NAME = FosBrandTableMap::COL_NAME;
+    protected const COLUMN_ACTIONS = 'actions';
+
     public const URL_BRAND_EDIT = RoutingConstants::URL_EDIT;
     public const URL_BRAND_DELETE = RoutingConstants::URL_DELETE;
 
     /**
-     * @var \Orm\Zed\Brand\Persistence\Base\FosBrandQuery
+     * @var \Orm\Zed\Brand\Persistence\FosBrandQuery
      */
-    protected $fosBrandQuery;
+    protected $brandQuery;
 
     /**
-     * @param \Orm\Zed\Brand\Persistence\FosBrandQuery $fosBrandQuery
+     * @param \Orm\Zed\Brand\Persistence\FosBrandQuery $brandQuery
      */
-    public function __construct(
-        FosBrandQuery $fosBrandQuery
-    ) {
-        $this->fosBrandQuery = $fosBrandQuery;
-    }
-
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
-    protected function configure(TableConfiguration $config): TableConfiguration
+    public function __construct(FosBrandQuery $brandQuery)
     {
-        $config->setHeader([
-            FosBrandTableMap::COL_ID_BRAND => '#',
-            FosBrandTableMap::COL_NAME => 'Name',
-            FosBrandTableMap::COL_URL => 'Url',
-            FosBrandTableMap::COL_IS_ACTIVE => 'Status',
-            static::ACTIONS => static::ACTIONS,
-        ]);
-
-        $config->addRawColumn(static::ACTIONS)
-            ->addRawColumn(FosBrandTableMap::COL_IS_ACTIVE);
-
-        $config->setSortable([
-            FosBrandTableMap::COL_NAME,
-            FosBrandTableMap::COL_IS_ACTIVE,
-        ]);
-
-        $config->setSearchable([
-            FosBrandTableMap::COL_NAME,
-        ]);
-
-        return $config;
+        $this->brandQuery = $brandQuery;
     }
 
     /**
@@ -68,62 +39,88 @@ class BrandTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        $queryResults = $this->runQuery($this->brandQuery, $config);
+
         $results = [];
-        $query = $this->fosBrandQuery;
-        $queryResults = $this->runQuery($query, $config);
 
         foreach ($queryResults as $item) {
-            $results[] = [
-                FosBrandTableMap::COL_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND],
-                FosBrandTableMap::COL_NAME => $item[FosBrandTableMap::COL_NAME],
-                FosBrandTableMap::COL_URL => $item[FosBrandTableMap::COL_URL],
-                FosBrandTableMap::COL_IS_ACTIVE => $this->createStatusLabel($item[FosBrandTableMap::COL_URL]),
-                self::ACTIONS => implode(' ', $this->buildLinks($item)),
+            $rowData = [
+                static::COLUMN_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND],
+                static::COLUMN_NAME => $item[FosBrandTableMap::COL_NAME],
+                static::COLUMN_ACTIONS => $this->buildLinks($item),
             ];
+
+            $results[] = $rowData;
         }
+
+        unset($queryResults);
 
         return $results;
     }
 
     /**
-     * @param array $queryResult
+     * @param array $item
      *
-     * @return array
+     * @return string
      */
-    protected function buildLinks(array $item): array
+    protected function buildLinks(array $item): string
     {
         $buttons = [];
 
-        $editUrl = Url::generate(
-            static::URL_BRAND_EDIT,
-            [
-                BrandAbstractController::URL_PARAM_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND],
-            ]
-        );
-        $deleteUrl = Url::generate(
-            static::URL_BRAND_DELETE,
-            [
-                BrandAbstractController::URL_PARAM_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND],
-            ]
-        );
+        $editUrl = Url::generate(static::URL_BRAND_EDIT, [BrandAbstractController::URL_PARAM_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND]]);
+        $deleteUrl = Url::generate(static::URL_BRAND_DELETE, [BrandAbstractController::URL_PARAM_ID_BRAND => $item[FosBrandTableMap::COL_ID_BRAND]]);
 
         $buttons[] = $this->generateEditButton($editUrl, 'Edit Brand');
         $buttons[] = $this->generateRemoveButton($deleteUrl, 'Remove Brand');
 
-        return $buttons;
+        return implode(' ', $buttons);
     }
 
     /**
-     * @param bool $isActive
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return string
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function createStatusLabel(bool $isActive): string
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
-        if ($isActive) {
-            return $this->generateLabel('Active', 'label-info');
-        }
+        $config = $this->setHeader($config);
+        $config->addRawColumn(static::COLUMN_ACTIONS);
 
-        return $this->generateLabel('Inactive', 'label-danger');
+        $config->setSortable(
+            [
+                static::COLUMN_ID_BRAND,
+                static::COLUMN_NAME,
+            ]
+        );
+
+        $config->setSearchable(
+            [
+                static::COLUMN_ID_BRAND,
+                static::COLUMN_NAME,
+            ]
+        );
+
+        $config->setDefaultSortField(static::COLUMN_ID_BRAND, TableConfiguration::SORT_DESC);
+
+        return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function setHeader(TableConfiguration $config): TableConfiguration
+    {
+        $baseData = [
+            static::COLUMN_ID_BRAND => 'ID',
+            static::COLUMN_NAME => 'Name',
+        ];
+
+        $actions = [static::COLUMN_ACTIONS => 'Actions'];
+
+        $config->setHeader($baseData + $actions);
+
+        return $config;
     }
 }

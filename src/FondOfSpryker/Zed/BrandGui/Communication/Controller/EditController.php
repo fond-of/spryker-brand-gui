@@ -2,9 +2,9 @@
 
 namespace FondOfSpryker\Zed\BrandGui\Communication\Controller;
 
+use Generated\Shared\Transfer\BrandTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,52 +30,29 @@ class EditController extends BrandAbstractController
         );
 
         if ($brandTransfer === null) {
-            return $this->viewResponse($this->executeEditAction($request, $brandAggregateForm));
+            $brandTransfer = (new BrandTransfer())->setIdBrand(
+                $this->castId($request->get(static::URL_PARAM_ID_BRAND))
+            );
+
+            return $this->viewResponse($this->executeEditAction($brandTransfer, $brandAggregateForm));
         }
 
-        exit('5');
-        $productListResponseTransfer = $this->getFactory()
-            ->getProductListFacade()
-            ->updateProductList($productListTransfer);
+        $brandResponseTransfer = $this->getFactory()
+            ->getBrandFacade()
+            ->updateBrand($brandTransfer);
 
-        $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
-
-        if ($productListResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS, [
-                '%s' => $productListTransfer->getTitle(),
+        if ($brandResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_BRAND_UPDATE_SUCCESS, [
+                '%s' => $brandTransfer->getTitle(),
             ]);
         }
 
         $redirectUrl = Url::generate(
             static::ROUTE_REDIRTECT,
-            [static::URL_PARAM_ID_PRODUCT_LIST => $productListTransfer->getIdProductList()]
+            [static::URL_PARAM_ID_BRAND => $brandTransfer->getIdBrand()]
         )->build();
 
         return $this->redirectResponse($redirectUrl);
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function availableProductConcreteTableAction(): JsonResponse
-    {
-        $availableProductConcreteTable = $this->getFactory()->createAvailableProductConcreteTable();
-
-        return $this->jsonResponse(
-            $availableProductConcreteTable->fetchData()
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function assignedProductConcreteTableAction(): JsonResponse
-    {
-        $assignedProductConcreteTable = $this->getFactory()->createAssignedProductConcreteTable();
-
-        return $this->jsonResponse(
-            $assignedProductConcreteTable->fetchData()
-        );
     }
 
     /**
@@ -84,11 +61,14 @@ class EditController extends BrandAbstractController
      *
      * @return array
      */
-    protected function executeEditAction(Request $request, FormInterface $productListAggregateForm)
+    protected function executeEditAction(brandTransfer $brandTransfer, FormInterface $brandAggregateForm)
     {
-        $idBrand = $this->castId($request->get(static::URL_PARAM_ID_BRAND));
-        $data = $this->prepareTemplateVariables($productListAggregateForm);
-        $data['idBrand'] = $idBrand;
+        $data = $this->prepareTemplateVariables($brandAggregateForm);
+        $data['idBrand'] = $brandTransfer->getIdBrand();
+
+        $data['brandAggregationTabs'] = $this->getFactory()
+        ->createBrandEditAggregationTabs()
+        ->createView();
 
         return $data;
     }

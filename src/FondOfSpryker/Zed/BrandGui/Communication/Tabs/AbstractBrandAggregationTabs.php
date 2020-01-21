@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\BrandGui\Communication\Tabs;
 
+use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabsExpanderInterface;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
@@ -12,14 +13,17 @@ abstract class AbstractBrandAggregationTabs extends AbstractTabs
     public const GENERAL_TAB_TITLE = 'General Information';
     public const GENERAL_TAB_TEMPLATE = '@BrandGui/_partials/_tabs/general-information.twig';
 
+    /**
+     * @var \FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabsExpanderInterface
+     */
     protected $brandCreateAggregationTabsExpander;
 
     /**
-     * @param \Spryker\Zed\ProductListGui\Communication\Expander\ProductListCreateAggregationTabsExpanderInterface $productListCreateAggregationTabsExpander
+     * @param \FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabsExpanderInterface $brandCreateAggregationTabsExpander
      */
-    public function __construct(BrandCreateAggregationTabsExpanderInterface $productListCreateAggregationTabsExpander)
+    public function __construct(BrandCreateAggregationTabsExpanderInterface $brandCreateAggregationTabsExpander)
     {
-        $this->productListCreateAggregationTabsExpander = $productListCreateAggregationTabsExpander;
+        $this->brandCreateAggregationTabsExpander = $brandCreateAggregationTabsExpander;
     }
 
     /**
@@ -32,7 +36,7 @@ abstract class AbstractBrandAggregationTabs extends AbstractTabs
         $this->addGeneralInformationTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
-        $tabsViewTransfer = $this->productListCreateAggregationTabsExpander->expandWithProductListAssignmentTabs($tabsViewTransfer);
+        $tabsViewTransfer = $this->brandCreateAggregationTabsExpander->expandWithBrandAssignmentTabs($tabsViewTransfer);
 
         $tabsViewTransfer->setIsNavigable(true);
 
@@ -64,7 +68,7 @@ abstract class AbstractBrandAggregationTabs extends AbstractTabs
      */
     protected function setFooter(TabsViewTransfer $tabsViewTransfer)
     {
-        $tabsViewTransfer->setFooterTemplate('@ProductListGui/_partials/_tabs/submit-button.twig');
+        $tabsViewTransfer->setFooterTemplate('@BrandGui/_partials/_tabs/submit-button.twig');
 
         return $this;
     }

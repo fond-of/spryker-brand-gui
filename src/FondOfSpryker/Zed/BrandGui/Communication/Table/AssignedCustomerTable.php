@@ -6,7 +6,7 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 
 class AssignedCustomerTable extends AbstractCustomerTable
 {
-    protected const DEFAULT_URL = 'assignedCustomerTable';
+    protected const DEFAULT_URL = 'assigned-customer-table';
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 
     /**
@@ -17,8 +17,8 @@ class AssignedCustomerTable extends AbstractCustomerTable
     protected function filterQuery(SpyCustomerQuery $spyCustomerQuery): SpyCustomerQuery
     {
         $spyCustomerQuery
-            ->useSpyProductListCustomerQuery()
-                ->filterByFkProductList($this->getIdProductList())
+            ->useFosBrandCustomerQuery()
+                ->filterByFkBrand($this->getIdBrand())
             ->endUse();
 
         return $spyCustomerQuery;

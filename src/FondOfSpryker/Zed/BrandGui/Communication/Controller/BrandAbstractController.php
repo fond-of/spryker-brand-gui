@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\BrandGui\Communication\Controller;
 
-use Generated\Shared\Transfer\BrandResponseTransfer;
 use Generated\Shared\Transfer\BrandTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -58,28 +57,13 @@ class BrandAbstractController extends AbstractController
         $aggregateFormTransfer = $aggregateForm->getData();
 
         $brandTransfer = $aggregateFormTransfer->getBrand();
-        $brandTransfer->setBrandCustomerRelation($aggregateFormTransfer->getBrandCustomerRelation());
+        $brandTransfer
+            ->setBrandCustomerRelation($aggregateFormTransfer->getBrandCustomerRelation())
+            ->setBrandCompanyRelation($aggregateFormTransfer->getBrandCompanyRelation());
 
         return $brandTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
-     *
-     * @return void
-     */
-    protected function addMessagesFromBrandResponseTransfer(BrandResponseTransfer $brandResponseTransfer): void
-    {
-        foreach ($brandResponseTransfer->getMessages() as $messageTransfer) {
-            if ($brandResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
-
-                continue;
-            }
-            $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
-        }
-    }
-    
     /**
      * @param \Symfony\Component\Form\FormInterface $productListAggregateForm
      *
@@ -89,17 +73,24 @@ class BrandAbstractController extends AbstractController
     {
         $assignedCustomerRelationTabs = $this->getFactory()->createAssignedCustomerRelationTabs();
         $availableCustomerRelationTabs = $this->getFactory()->createAvailableCustomerRelationTabs();
-
         $availableCustomerTable = $this->getFactory()->createAvailableCustomerTable();
         $assignedCustomerTable = $this->getFactory()->createAssignedCustomerTable();
 
+        $assignedCompanyRelationTabs = $this->getFactory()->createAssignedCompanyRelationTabs();
+        $availableCompanyRelationTabs = $this->getFactory()->createAvailableCompanyRelationTabs();
+        $availableCompanyTable = $this->getFactory()->createAvailableCompanyTable();
+        $assignedCompanyTable = $this->getFactory()->createAssignedCompanyTable();
+
         return [
-            'brandAggregationTabs' => $this->getFactory()->createBrandAggregationTabs()->createView(),
             'aggregateForm' => $brandAggregateForm->createView(),
-            'availableCustomerRelationTabs' => $assignedCustomerRelationTabs->createView(),
-            'assignedCustomerRelationTabs' => $availableCustomerRelationTabs->createView(),
-            'availableProductConcreteTable' => $availableCustomerTable->render(),
-            'assignedProductConcreteTable' => $assignedCustomerTable->render(),
+            'availableCustomerRelationTabs' => $availableCustomerRelationTabs->createView(),
+            'assignedCustomerRelationTabs' => $assignedCustomerRelationTabs->createView(),
+            'availableCustomerTable' => $availableCustomerTable->render(),
+            'assignedCustomerTable' => $assignedCustomerTable->render(),
+            'availableCompanyRelationTabs' => $availableCompanyRelationTabs->createView(),
+            'assignedCompanyRelationTabs' => $assignedCompanyRelationTabs->createView(),
+            'availableCompanyTable' => $availableCompanyTable->render(),
+            'assignedCompanyTable' => $assignedCompanyTable->render(),
         ];
     }
 }
