@@ -18,7 +18,6 @@ class AvailableCustomerTable extends AbstractCustomerTable
      */
     protected function filterQuery(SpyCustomerQuery $customerQuery): SpyCustomerQuery
     {
-        exit('3');
         if ($this->getIdBrand()) {
             $customerQuery
                 ->useFosBrandCustomerQuery(
