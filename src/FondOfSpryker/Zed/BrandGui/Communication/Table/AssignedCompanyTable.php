@@ -6,7 +6,7 @@ use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 
 class AssignedCompanyTable extends AbstractCompanyTable
 {
-    protected const DEFAULT_URL = 'assignedCompanyTable';
+    protected const DEFAULT_URL = 'assigned-company-table';
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 
     /**

@@ -8,7 +8,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class AvailableCompanyTable extends AbstractCompanyTable
 {
-    protected const DEFAULT_URL = 'availableCompanyTable';
+    protected const DEFAULT_URL = 'available-company-table';
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 
     /**

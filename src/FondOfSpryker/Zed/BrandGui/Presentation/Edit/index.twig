@@ -9,3 +9,7 @@
         {{ removeActionButton(url('/brand-gui/delete', {'id-brand': idBrand}), 'Remove Brand' | trans) }}
     {% endif %}
 {% endblock %}
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-brand-assign.js') }}"></script>
+{% endblock %}

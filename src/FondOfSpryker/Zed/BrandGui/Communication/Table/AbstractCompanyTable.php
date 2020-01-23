@@ -100,19 +100,19 @@ abstract class AbstractCompanyTable extends AbstractTable
     }
 
     /**
-     * @param string[] $customer
+     * @param string[] $company
      *
      * @return string[]
      */
-    protected function buildDataRow(array $customer): array
+    protected function buildDataRow(array $company): array
     {
         return [
-            static::COLUMN_ID => $customer[SpyCompanyTableMap::COL_ID_COMPANY],
-            static::COLUMN_NAME => $customer[SpyCompanyTableMap::COL_NAME],
+            static::COLUMN_ID => $company[SpyCompanyTableMap::COL_ID_COMPANY],
+            static::COLUMN_NAME => $company[SpyCompanyTableMap::COL_NAME],
             static::COLUMN_ACTION => sprintf(
-                '<input class="%s-all-customers-checkbox" type="checkbox"  value="%d">',
+                '<input class="%s-all-companies-checkbox" type="checkbox"  value="%d">',
                 static::TABLE_IDENTIFIER,
-                $customer[SpyCompanyTableMap::COL_ID_COMPANY]
+                $company[SpyCompanyTableMap::COL_ID_COMPANY]
             ),
         ];
     }
