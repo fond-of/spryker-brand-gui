@@ -2,8 +2,8 @@
 
 namespace FondOfSpryker\Zed\BrandGui\Communication\Form;
 
+use Generated\Shared\Transfer\BrandAggregateFormTransfer;
 use Generated\Shared\Transfer\BrandCustomerRelationTransfer;
-use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,8 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BrandCustomerRelationFormType extends AbstractType
 {
     public const FIELD_ID_BRAND = BrandCustomerRelationTransfer::ID_BRAND;
-    public const FIELD_CUSTOMER_IDS = BrandCustomerRelationTransfer::CUSTOMER_IDS;
-    public const BLOCK_PREFIX = 'brandCustomerRelation';
+    public const FIELD_ASSIGNED_CUSTOMER_IDS = BrandAggregateFormTransfer::ASSIGNED_CUSTOMER_IDS;
+    public const FIELD_CUSTOMER_IDS_TO_BE_ASSIGNED = BrandAggregateFormTransfer::CUSTOMER_IDS_TO_BE_ASSIGNED;
+    public const FIELD_CUSTOMER_IDS_TO_BE_DEASSIGNED = BrandAggregateFormTransfer::CUSTOMER_IDS_TO_BE_DE_ASSIGNED;
+
+    public const CUSTOMER_IDS = BrandCustomerRelationTransfer::CUSTOMER_IDS;
+    public const BLOCK_PREFIX = 'brandCustomerRelationTransfer';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -32,8 +36,6 @@ class BrandCustomerRelationFormType extends AbstractType
             'data_class' => BrandCustomerRelationTransfer::class,
             'label' => false,
         ]);
-
-        $resolver->setRequired(BrandAggregateFormType::OPTION_CUSTOMER_IDS);
     }
 
     /**
@@ -53,7 +55,7 @@ class BrandCustomerRelationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdBrandField($builder)
-            ->addCustomerIdsField($builder, $options);
+            ->addCustomerIdsField($builder);
     }
 
     /**
@@ -77,14 +79,9 @@ class BrandCustomerRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addCustomerIdsField(FormBuilderInterface $builder, array $options)
+    protected function addCustomerIdsField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CUSTOMER_IDS, Select2ComboBoxType::class, [
-            'label' => 'Customers',
-            'choices' => array_flip($options[BrandAggregateFormType::OPTION_CUSTOMER_IDS]),
-            'multiple' => true,
-            'required' => false,
-        ]);
+        $builder->add(static::CUSTOMER_IDS, HiddenType::class);
 
         return $this;
     }

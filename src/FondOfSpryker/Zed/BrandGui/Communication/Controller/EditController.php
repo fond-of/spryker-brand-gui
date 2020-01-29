@@ -15,7 +15,7 @@ class EditController extends BrandAbstractController
 {
     public const MESSAGE_BRAND_UPDATE_SUCCESS = 'Brand "%s" has been successfully updated.';
 
-    protected const ROUTE_REDIRTECT = '/product-brand/edit';
+    protected const ROUTE_REDIRTECT = '/brand-gui/edit';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,6 +41,8 @@ class EditController extends BrandAbstractController
         $brandResponseTransfer = $this->getFactory()
             ->getBrandFacade()
             ->updateBrand($brandTransfer);
+
+        $this->addMessagesFromBrandResponseTransfer($brandResponseTransfer);
 
         if ($brandResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_BRAND_UPDATE_SUCCESS, [

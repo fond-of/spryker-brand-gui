@@ -3,6 +3,10 @@
 namespace FondOfSpryker\Zed\BrandGui\Communication;
 
 use FondOfSpryker\Zed\BrandGui\BrandGuiDependencyProvider;
+use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandAggregateFormDataProviderExpander;
+use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandAggregateFormDataProviderExpanderInterface;
+use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandAggregateFormExpander;
+use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandAggregateFormExpanderInterface;
 use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabsExpander;
 use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabsExpanderInterface;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\BrandAggregateFormType;
@@ -181,8 +185,7 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new BrandAggregateFormDataProvider(
             $this->createBrandFormDataProvider(),
-            $this->createBrandCustomerRelationFormDataProvider(),
-            $this->createBrandCompanyRelationFormDataProvider()
+            $this->createBrandAggregateFormDataProviderExpander()
         );
     }
 
@@ -197,6 +200,22 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
                 $brandAggregateFormTransfer,
                 $options
             );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandAggregateFormExpanderInterface
+     */
+    public function createBrandAggregateFormExpander(): BrandAggregateFormExpanderInterface
+    {
+        return new BrandAggregateFormExpander();
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandAggregateFormDataProviderExpanderInterface
+     */
+    public function createBrandAggregateFormDataProviderExpander(): BrandAggregateFormDataProviderExpanderInterface
+    {
+        return new BrandAggregateFormDataProviderExpander();
     }
 
     /**

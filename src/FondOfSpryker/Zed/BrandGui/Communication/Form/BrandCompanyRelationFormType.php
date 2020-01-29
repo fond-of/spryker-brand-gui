@@ -2,8 +2,8 @@
 
 namespace FondOfSpryker\Zed\BrandGui\Communication\Form;
 
+use Generated\Shared\Transfer\BrandAggregateFormTransfer;
 use Generated\Shared\Transfer\BrandCompanyRelationTransfer;
-use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,8 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BrandCompanyRelationFormType extends AbstractType
 {
     public const FIELD_ID_BRAND = BrandCompanyRelationTransfer::ID_BRAND;
-    public const FIELD_COMPANY_IDS = BrandCompanyRelationTransfer::COMPANY_IDS;
-    public const BLOCK_PREFIX = 'brandCompanyRelation';
+    public const FIELD_ASSIGNED_COMPANY_IDS = BrandAggregateFormTransfer::ASSIGNED_COMPANY_IDS;
+    public const FIELD_COMPANY_IDS_TO_BE_ASSIGNED = BrandAggregateFormTransfer::COMPANY_IDS_TO_BE_ASSIGNED;
+    public const FIELD_COMPANY_IDS_TO_BE_DEASSIGNED = BrandAggregateFormTransfer::COMPANY_IDS_TO_BE_DE_ASSIGNED;
+
+    public const COMPANY_IDS = BrandCompanyRelationTransfer::COMPANY_IDS;
+    public const BLOCK_PREFIX = 'brandCompanyRelationTransfer';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -32,8 +36,6 @@ class BrandCompanyRelationFormType extends AbstractType
             'data_class' => BrandCompanyRelationTransfer::class,
             'label' => false,
         ]);
-
-        $resolver->setRequired(BrandAggregateFormType::OPTION_COMPANY_IDS);
     }
 
     /**
@@ -53,7 +55,7 @@ class BrandCompanyRelationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdBrandField($builder)
-            ->addCompanyIdsField($builder, $options);
+            ->addCompanyIdsField($builder);
     }
 
     /**
@@ -73,18 +75,12 @@ class BrandCompanyRelationFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addCompanyIdsField(FormBuilderInterface $builder, array $options)
+    protected function addCompanyIdsField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_COMPANY_IDS, Select2ComboBoxType::class, [
-            'label' => 'Companies',
-            'choices' => array_flip($options[BrandAggregateFormType::OPTION_COMPANY_IDS]),
-            'multiple' => true,
-            'required' => false,
-        ]);
+        $builder->add(static::COMPANY_IDS, HiddenType::class);
 
         return $this;
     }

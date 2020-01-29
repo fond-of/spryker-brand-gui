@@ -3,6 +3,18 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="BrandResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="brand" type="Brand"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="name" type="string"/>
+        <property name="idBrand" type="int"/>
+        <property name="brandCustomerRelation" type="BrandCustomerRelation"/>
+    </transfer>
+
     <transfer name="BrandAggregateForm">
         <property name="customerIdsToBeDeAssigned" type="string" />
         <property name="customerIdsToBeAssigned" type="string" />
@@ -13,6 +25,21 @@
         <property name="brand" type="Brand"/>
         <property name="assignedCustomerIds" type="string"/>
         <property name="assignedCompanyIds" type="string"/>
+    </transfer>
+
+    <transfer name="BrandCustomerRelation">
+        <property name="customerIds" type="int[]" singular="customerIds"/>
+        <property name="idBrand" type="int"/>
+    </transfer>
+
+    <transfer name="BrandCompanyRelation">
+        <property name="companyIds" type="int[]" singular="companyIds"/>
+        <property name="idBrand" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="parameters" type="array" singular="parameters"/>
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

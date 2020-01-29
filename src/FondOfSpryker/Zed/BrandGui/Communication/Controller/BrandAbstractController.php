@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\BrandGui\Communication\Controller;
 
+use Generated\Shared\Transfer\BrandResponseTransfer;
 use Generated\Shared\Transfer\BrandTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -62,6 +63,22 @@ class BrandAbstractController extends AbstractController
             ->setBrandCompanyRelation($aggregateFormTransfer->getBrandCompanyRelation());
 
         return $brandTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addMessagesFromBrandResponseTransfer(BrandResponseTransfer $brandResponseTransfer): void
+    {
+        foreach ($brandResponseTransfer->getMessages() as $messageTransfer) {
+            if ($brandResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+
+                continue;
+            }
+
+            $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+        }
     }
 
     /**
