@@ -39,14 +39,14 @@ class CreateController extends BrandAbstractController
             ->getBrandFacade()
             ->createBrand($brandTransfer);
 
-        $this->addMessagesFromBrandResponseTransfer($brandTransfer);
+        $this->addMessagesFromBrandResponseTransfer($brandResponseTransfer);
 
         if ($brandResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_BRAND_CREATE_SUCCESS, [
                 '%s' => $brandTransfer->getName(),
             ]);
 
-            return $this->redirectResponse($this->getEditUrl($brandResponseTransfer->getB()->getIdProductList()));
+            return $this->redirectResponse($this->getEditUrl($brandResponseTransfer->getBrand()->getIdBrand()));
         }
 
         $viewData = $this->prepareTemplateVariables($brandAggregateForm);

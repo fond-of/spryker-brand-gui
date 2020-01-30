@@ -27,6 +27,16 @@ class BrandGuiToBrandFacadeBridge implements BrandGuiToBrandFacadeInterface
      *
      * @return \Generated\Shared\Transfer\BrandResponseTransfer
      */
+    public function createBrand(BrandTransfer $brandTransfer): BrandResponseTransfer
+    {
+        return $this->brandFacade->createBrand($brandTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BrandTransfer $brandTransfer
+     *
+     * @return \Generated\Shared\Transfer\BrandResponseTransfer
+     */
     public function addBrand(BrandTransfer $brandTransfer): BrandResponseTransfer
     {
         return $this->brandFacade->addBrand($brandTransfer);
@@ -70,5 +80,15 @@ class BrandGuiToBrandFacadeBridge implements BrandGuiToBrandFacadeInterface
     public function getBrandCollection(BrandCollectionTransfer $brandCollectionTransfer): BrandCollectionTransfer
     {
         return $this->brandFacade->getBrandCollection($brandCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BrandTransfer $brandTransfer
+     *
+     * @return \Generated\Shared\Transfer\BrandResponseTransfer
+     */
+    public function removeBrand(BrandTransfer $brandTransfer): BrandResponseTransfer
+    {
+        return $this->brandFacade->removeBrand($brandTransfer);
     }
 }

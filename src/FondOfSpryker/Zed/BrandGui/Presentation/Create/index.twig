@@ -38,5 +38,9 @@
 
     {{ form_end(aggregateForm) }}
 {% endblock %}
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-brand-assign.js') }}"></script>
+{% endblock %}
 
 

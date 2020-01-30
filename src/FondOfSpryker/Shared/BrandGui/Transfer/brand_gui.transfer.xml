@@ -9,10 +9,11 @@
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
-    <transfer name="ProductList">
+    <transfer name="Brand">
         <property name="name" type="string"/>
         <property name="idBrand" type="int"/>
         <property name="brandCustomerRelation" type="BrandCustomerRelation"/>
+        <property name="brandCompanyRelation" type="BrandCompanyRelation"/>
     </transfer>
 
     <transfer name="BrandAggregateForm">

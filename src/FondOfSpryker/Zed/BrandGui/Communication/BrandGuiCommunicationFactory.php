@@ -24,6 +24,7 @@ use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AssignedCompanyRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AssignedCustomerRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AvailableCompanyRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AvailableCustomerRelationTabs;
+use FondOfSpryker\Zed\BrandGui\Communication\Tabs\BrandCreateAggregationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\BrandEditAggregationTabs;
 use FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToBrandFacadeInterface;
 use FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToCompanyFacadeInterface;
@@ -260,6 +261,14 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createBrandEditAggregationTabs(): TabsInterface
     {
         return new BrandEditAggregationTabs($this->createBrandCreateAggregationTabsExpander());
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createBrandCreateAggregationTabs(): TabsInterface
+    {
+        return new BrandCreateAggregationTabs($this->createBrandCreateAggregationTabsExpander());
     }
 
     /**

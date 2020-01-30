@@ -27,7 +27,13 @@ class BrandFormDataProvider
      */
     public function getData(int $idBrand): BrandTransfer
     {
-        $brandTransfer = (new BrandTransfer())->setIdBrand($idBrand);
+        $brandTransfer = new BrandTransfer();
+
+        if (!$idBrand) {
+            return $brandTransfer;
+        }
+
+        $brandTransfer->setIdBrand($idBrand);
 
         return $this->brandFacade->findBrandById($brandTransfer);
     }

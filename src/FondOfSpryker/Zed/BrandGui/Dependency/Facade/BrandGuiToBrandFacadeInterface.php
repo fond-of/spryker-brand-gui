@@ -13,6 +13,13 @@ interface BrandGuiToBrandFacadeInterface
      *
      * @return \Generated\Shared\Transfer\BrandResponseTransfer
      */
+    public function createBrand(BrandTransfer $brandTransfer): BrandResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\BrandTransfer $brandTransfer
+     *
+     * @return \Generated\Shared\Transfer\BrandResponseTransfer
+     */
     public function addBrand(BrandTransfer $brandTransfer): BrandResponseTransfer;
 
     /**
@@ -21,6 +28,7 @@ interface BrandGuiToBrandFacadeInterface
      * @return \Generated\Shared\Transfer\BrandResponseTransfer
      */
     public function updateBrand(BrandTransfer $brandTransfer): BrandResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\BrandTransfer $brandTransfer
      *
@@ -41,4 +49,11 @@ interface BrandGuiToBrandFacadeInterface
      * @return \Generated\Shared\Transfer\BrandCollectionTransfer
      */
     public function getBrandCollection(BrandCollectionTransfer $brandCollectionTransfer): BrandCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\BrandTransfer $brandTransfer
+     *
+     * @return \Generated\Shared\Transfer\BrandResponseTransfer
+     */
+    public function removeBrand(BrandTransfer $brandTransfer): BrandResponseTransfer;
 }
