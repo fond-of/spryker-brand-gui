@@ -5,6 +5,7 @@ namespace FondOfSpryker\Zed\BrandGui\Communication\Expander;
 use Generated\Shared\Transfer\BrandAggregateFormTransfer;
 use Generated\Shared\Transfer\BrandCompanyRelationTransfer;
 use Generated\Shared\Transfer\BrandCustomerRelationTransfer;
+use Generated\Shared\Transfer\BrandProductAbstractRelationTransfer;
 use Generated\Shared\Transfer\BrandTransfer;
 
 class BrandAggregateFormDataProviderExpander implements BrandAggregateFormDataProviderExpanderInterface
@@ -21,8 +22,10 @@ class BrandAggregateFormDataProviderExpander implements BrandAggregateFormDataPr
 
         $brandTransfer = $brandAggregateFormTransfer->getBrand();
 
-        return $brandAggregateFormTransfer->setAssignedCustomerIds($this->getAssignedCustomerIds($brandTransfer))
-            ->setAssignedCompanyIds($this->getAssignedCompanyIds($brandTransfer));
+        return $brandAggregateFormTransfer
+            ->setAssignedCustomerIds($this->getAssignedCustomerIds($brandTransfer))
+            ->setAssignedCompanyIds($this->getAssignedCompanyIds($brandTransfer))
+            ->setAssignedProductAbstractIds($this->getAssignedProductAbstractIds($brandTransfer));
     }
 
     /**
@@ -51,5 +54,19 @@ class BrandAggregateFormDataProviderExpander implements BrandAggregateFormDataPr
         }
 
         return implode(',', $brandTransfer->getBrandCompanyRelation()->getCompanyIds());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BrandTransfer $brandTransfer
+     *
+     * @return string
+     */
+    protected function getAssignedProductAbstractIds(BrandTransfer $brandTransfer): string
+    {
+        if (!$brandTransfer->getBrandProductAbstractRelation()) {
+            $brandTransfer->setBrandProductAbstractRelation(new BrandProductAbstractRelationTransfer());
+        }
+
+        return implode(',', $brandTransfer->getBrandProductAbstractRelation()->getProductAbstractIds());
     }
 }

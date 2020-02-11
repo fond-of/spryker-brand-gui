@@ -1,0 +1,15 @@
+{% block content %}
+    {{ tabs(
+        availableProductAbstractRelationTabs,
+        {
+            'availableProductAbstractTable': availableProductAbstractTable
+        }
+    ) }}
+    <hr/>
+    {{ tabs(
+        assignedProductAbstractRelationTabs,
+        {
+            'assignedProductAbstractTable': assignedProductAbstractTable
+        }
+    ) }}
+{% endblock %}

@@ -17,13 +17,17 @@ use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandCustomerRela
 use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandFormDataProvider;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedCompanyTable;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedCustomerTable;
+use FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedProductAbstractTable;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableCompanyTable;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableCustomerTable;
+use FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableProductAbstractTable;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\BrandTable;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AssignedCompanyRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AssignedCustomerRelationTabs;
+use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AssignedProductAbstractRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AvailableCompanyRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AvailableCustomerRelationTabs;
+use FondOfSpryker\Zed\BrandGui\Communication\Tabs\AvailableProductAbstractRelationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\BrandCreateAggregationTabs;
 use FondOfSpryker\Zed\BrandGui\Communication\Tabs\BrandEditAggregationTabs;
 use FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToBrandFacadeInterface;
@@ -33,6 +37,7 @@ use Generated\Shared\Transfer\BrandAggregateFormTransfer;
 use Orm\Zed\Brand\Persistence\FosBrandQuery;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -180,6 +185,38 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createAssignedProductAbstractRelationTabs(): TabsInterface
+    {
+        return new AssignedProductAbstractRelationTabs();
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedProductAbstractTable
+     */
+    public function createAssignedProductAbstractTable(): AssignedProductAbstractTable
+    {
+        return new AssignedProductAbstractTable($this->getProductAbstractPropelQuery());
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableProductAbstractTable
+     */
+    public function createAvailableProductAbstractTable(): AvailableProductAbstractTable
+    {
+        return new AvailableProductAbstractTable($this->getProductAbstractPropelQuery());
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createAvailableProductAbstractRelationTabs(): TabsInterface
+    {
+        return new AvailableProductAbstractRelationTabs();
+    }
+
+    /**
      * @return \FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandAggregateFormDataProvider
      */
     public function createBrandAggregateFormDataProvider(): BrandAggregateFormDataProvider
@@ -220,16 +257,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws
-     *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     */
-    public function getCustomerPropelQuery(): SpyCustomerQuery
-    {
-        return $this->getProvidedDependency(BrandGuiDependencyProvider::PROPEL_QUERY_CUSTOMER);
-    }
-
-    /**
      * @return \FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedCustomerTable
      */
     public function createAssignedCustomerTable(): AssignedCustomerTable
@@ -240,11 +267,29 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws
      *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    public function getCustomerPropelQuery(): SpyCustomerQuery
+    {
+        return $this->getProvidedDependency(BrandGuiDependencyProvider::PROPEL_QUERY_CUSTOMER);
+    }
+
+    /**
+     * @throws
+     *
      * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
      */
     public function getCompanyPropelQuery(): SpyCompanyQuery
     {
         return $this->getProvidedDependency(BrandGuiDependencyProvider::PROPEL_QUERY_COMPANY);
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function getProductAbstractPropelQuery(): SpyProductAbstractQuery
+    {
+        return $this->getProvidedDependency(BrandGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }
 
     /**

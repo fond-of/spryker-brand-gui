@@ -8,6 +8,7 @@ use FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToCustomerFacadeBridge;
 use Orm\Zed\Brand\Persistence\FosBrandQuery;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,10 +17,12 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_BRAND = 'FACADE_BRAND';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     public const PROPEL_QUERY_FOS_BRAND = 'PROPEL_QUERY_FOS_BRAND';
     public const PROPEL_QUERY_CUSTOMER = 'PROPEL_QUERY_CUSTOMER';
     public const PROPEL_QUERY_COMPANY = 'PROPEL_QUERY_COMPANY';
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +37,7 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addBrandPropelQuery($container);
+        $container = $this->addProductAbstractPropelQuery($container);
         $container = $this->addCustomerPropelQuery($container);
         $container = $this->addCompanyPropelQuery($container);
 
@@ -87,6 +91,20 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addProductAbstractPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
+            return SpyProductAbstractQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addBrandFacade(Container $container): Container
     {
         $container[static::FACADE_BRAND] = function (Container $container) {
@@ -119,6 +137,15 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COMPANY] = function (Container $container) {
             return new BrandGuiToCompanyFacadeBridge($container->getLocator()->company()->facade());
+        };
+
+        return $container;
+    }
+
+    protected function addProductFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new BrandGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

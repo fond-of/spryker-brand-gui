@@ -107,6 +107,30 @@ class EditController extends BrandAbstractController
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function availableProductAbstractTableAction(): JsonResponse
+    {
+        $availableProductAbstractTable = $this->getFactory()->createAvailableProductAbstractTable();
+
+        return $this->jsonResponse(
+            $availableProductAbstractTable->fetchData()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedProductAbstractTableAction(): JsonResponse
+    {
+        $assignedProductAbstractTable = $this->getFactory()->createAssignedProductAbstractTable();
+
+        return $this->jsonResponse(
+            $assignedProductAbstractTable->fetchData()
+        );
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $productListAggregateForm
      *

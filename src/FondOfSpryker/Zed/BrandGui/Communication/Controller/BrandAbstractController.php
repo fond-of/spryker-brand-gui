@@ -42,7 +42,7 @@ class BrandAbstractController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $aggregateForm
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer|null
+     * @return \Generated\Shared\Transfer\BrandTransfer|null
      */
     protected function findBrandTransfer(
         Request $request,
@@ -98,6 +98,11 @@ class BrandAbstractController extends AbstractController
         $availableCompanyTable = $this->getFactory()->createAvailableCompanyTable();
         $assignedCompanyTable = $this->getFactory()->createAssignedCompanyTable();
 
+        $assignedProductAbstractRelationTabs = $this->getFactory()->createAssignedProductAbstractRelationTabs();
+        $availableProductAbstractRelationTabs = $this->getFactory()->createAvailableProductAbstractRelationTabs();
+        $availableProductAbstractTable = $this->getFactory()->createAvailableProductAbstractTable();
+        $assignedProductAbstractTable = $this->getFactory()->createAssignedProductAbstractTable();
+
         return [
             'aggregateForm' => $brandAggregateForm->createView(),
             'availableCustomerRelationTabs' => $availableCustomerRelationTabs->createView(),
@@ -108,6 +113,10 @@ class BrandAbstractController extends AbstractController
             'assignedCompanyRelationTabs' => $assignedCompanyRelationTabs->createView(),
             'availableCompanyTable' => $availableCompanyTable->render(),
             'assignedCompanyTable' => $assignedCompanyTable->render(),
+            'availableProductAbstractRelationTabs' => $availableProductAbstractRelationTabs->createView(),
+            'assignedProductAbstractRelationTabs' => $assignedProductAbstractRelationTabs->createView(),
+            'availableProductAbstractTable' => $availableProductAbstractTable->render(),
+            'assignedProductAbstractTable' => $assignedProductAbstractTable->render(),
         ];
     }
 }

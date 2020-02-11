@@ -15,6 +15,10 @@ class BrandCreateAggregationTabsExpander implements BrandCreateAggregationTabsEx
     public const COMPANIES_TAB_TITLE = 'Assign Companies';
     public const COMPANIES_TAB_TEMPLATE = '@BrandGui/_partials/_tabs/brand-company-relation.twig';
 
+    public const PRODUCT_ABSTRACT_TAB_NAME = 'brand_product_abstract_relation';
+    public const PRODUCT_ABSTRACT_TAB_TITLE = 'Assign Products';
+    public const PRODUCT_ABSTRACT_TAB_TEMPLATE = '@BrandGui/_partials/_tabs/brand-product-abstract-relation.twig';
+
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -23,7 +27,8 @@ class BrandCreateAggregationTabsExpander implements BrandCreateAggregationTabsEx
     public function expandWithBrandAssignmentTabs(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $this->addBrandCustomerRelationTab($tabsViewTransfer)
-            ->addBrandCompanyRelationTab($tabsViewTransfer);
+            ->addBrandCompanyRelationTab($tabsViewTransfer)
+            ->addBrandProductAbstractRelationTab($tabsViewTransfer);
 
         return $tabsViewTransfer;
     }
@@ -56,6 +61,23 @@ class BrandCreateAggregationTabsExpander implements BrandCreateAggregationTabsEx
             ->setName(static::COMPANIES_TAB_NAME)
             ->setTitle(static::COMPANIES_TAB_TITLE)
             ->setTemplate(static::COMPANIES_TAB_TEMPLATE);
+
+        $tabsViewTransfer->addTab($tabItemTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function addBrandProductAbstractRelationTab(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabItemTransfer = (new TabItemTransfer())
+            ->setName(static::PRODUCT_ABSTRACT_TAB_NAME)
+            ->setTitle(static::PRODUCT_ABSTRACT_TAB_TITLE)
+            ->setTemplate(static::PRODUCT_ABSTRACT_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

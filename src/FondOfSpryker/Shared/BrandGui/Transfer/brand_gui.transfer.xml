@@ -14,6 +14,7 @@
         <property name="idBrand" type="int"/>
         <property name="brandCustomerRelation" type="BrandCustomerRelation"/>
         <property name="brandCompanyRelation" type="BrandCompanyRelation"/>
+        <property name="brandProductAbstractRelation" type="BrandProductAbstractRelation"/>
     </transfer>
 
     <transfer name="BrandAggregateForm">
@@ -21,11 +22,15 @@
         <property name="customerIdsToBeAssigned" type="string" />
         <property name="companyIdsToBeDeAssigned" type="string" />
         <property name="companyIdsToBeAssigned" type="string" />
+        <property name="productAbstractIdsToBeDeAssigned" type="string" />
+        <property name="productAbstractIdsToBeAssigned" type="string" />
         <property name="brandCustomerRelation" type="BrandCustomerRelation"/>
         <property name="brandCompanyRelation" type="BrandCompanyRelation"/>
+        <property name="brandProductAbstractRelation" type="BrandProductAbstractRelation"/>
         <property name="brand" type="Brand"/>
         <property name="assignedCustomerIds" type="string"/>
         <property name="assignedCompanyIds" type="string"/>
+        <property name="assignedProductAbstractIds" type="string"/>
     </transfer>
 
     <transfer name="BrandCustomerRelation">
@@ -35,6 +40,11 @@
 
     <transfer name="BrandCompanyRelation">
         <property name="companyIds" type="int[]" singular="companyIds"/>
+        <property name="idBrand" type="int"/>
+    </transfer>
+
+    <transfer name="BrandProductAbstractRelation">
+        <property name="productAbstractIds" type="int[]" singular="productAbstractIds"/>
         <property name="idBrand" type="int"/>
     </transfer>
 
