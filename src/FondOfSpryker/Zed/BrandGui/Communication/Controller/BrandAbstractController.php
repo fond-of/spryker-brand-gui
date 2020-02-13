@@ -60,7 +60,8 @@ class BrandAbstractController extends AbstractController
         $brandTransfer = $aggregateFormTransfer->getBrand();
         $brandTransfer
             ->setBrandCustomerRelation($aggregateFormTransfer->getBrandCustomerRelation())
-            ->setBrandCompanyRelation($aggregateFormTransfer->getBrandCompanyRelation());
+            ->setBrandCompanyRelation($aggregateFormTransfer->getBrandCompanyRelation())
+            ->setBrandProductAbstractRelation($aggregateFormTransfer->getBrandProductAbstractRelation());
 
         return $brandTransfer;
     }

@@ -110,7 +110,7 @@ abstract class AbstractProductAbstractTable extends AbstractTable
             static::COLUMN_ID => $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             static::COLUMN_SKU => $product[SpyProductAbstractTableMap::COL_SKU],
             static::COLUMN_ACTION => sprintf(
-                '<input class="%s-all-products-checkbox" type="checkbox"  value="%d">',
+                '<input class="%s-all-product-abstracts-checkbox" type="checkbox"  value="%d">',
                 static::TABLE_IDENTIFIER,
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]
             ),
