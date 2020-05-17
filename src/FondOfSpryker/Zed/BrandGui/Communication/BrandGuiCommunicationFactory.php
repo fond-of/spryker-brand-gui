@@ -12,8 +12,6 @@ use FondOfSpryker\Zed\BrandGui\Communication\Expander\BrandCreateAggregationTabs
 use FondOfSpryker\Zed\BrandGui\Communication\Form\BrandAggregateFormType;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\BrandForm;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandAggregateFormDataProvider;
-use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandCompanyRelationFormDataProvider;
-use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandCustomerRelationFormDataProvider;
 use FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandFormDataProvider;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedCompanyTable;
 use FondOfSpryker\Zed\BrandGui\Communication\Table\AssignedCustomerTable;
@@ -56,8 +54,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws
-     *
      * @return \Orm\Zed\Brand\Persistence\FosBrandQuery
      */
     protected function getFosBrandQuery(): FosBrandQuery
@@ -66,8 +62,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToBrandFacadeInterface
      */
     public function getBrandFacade(): BrandGuiToBrandFacadeInterface
@@ -76,8 +70,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToCustomerFacadeInterface
      */
     public function getCustomerFacade(): BrandGuiToCustomerFacadeInterface
@@ -86,8 +78,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\BrandGui\Dependency\Facade\BrandGuiToCompanyFacadeInterface
      */
     public function getCompanyFacade(): BrandGuiToCompanyFacadeInterface
@@ -139,17 +129,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandCustomerRelationFormDataProvider
-     */
-    public function createBrandCustomerRelationFormDataProvider(): BrandCustomerRelationFormDataProvider
-    {
-        return new BrandCustomerRelationFormDataProvider(
-            $this->getBrandFacade(),
-            $this->getCustomerFacade()
-        );
-    }
-
-    /**
      * @return \FondOfSpryker\Zed\BrandGui\Communication\Table\AvailableCompanyTable
      */
     public function createAvailableCompanyTable(): AvailableCompanyTable
@@ -171,17 +150,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createAssignedCompanyRelationTabs(): TabsInterface
     {
         return new AssignedCompanyRelationTabs();
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\BrandGui\Communication\Form\DataProvider\BrandCompanyRelationFormDataProvider
-     */
-    public function createBrandCompanyRelationFormDataProvider(): BrandCompanyRelationFormDataProvider
-    {
-        return new BrandCompanyRelationFormDataProvider(
-            $this->getBrandFacade(),
-            $this->getCompanyFacade()
-        );
     }
 
     /**
@@ -265,8 +233,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws
-     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function getCustomerPropelQuery(): SpyCustomerQuery
@@ -275,8 +241,6 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws
-     *
      * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
      */
     public function getCompanyPropelQuery(): SpyCompanyQuery

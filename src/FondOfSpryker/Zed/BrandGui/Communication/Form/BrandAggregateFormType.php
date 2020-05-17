@@ -50,7 +50,7 @@ class BrandAggregateFormType extends AbstractType
     {
         $this
             ->addBrandSubForm($builder)
-            ->expandWithBrandAssignmentForms($builder, $options);
+            ->expandWithBrandAssignmentForms($builder);
     }
 
     /**
@@ -70,15 +70,14 @@ class BrandAggregateFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function expandWithBrandAssignmentForms(FormBuilderInterface $builder, array $options)
+    protected function expandWithBrandAssignmentForms(FormBuilderInterface $builder)
     {
         $this->getFactory()
             ->createBrandAggregateFormExpander()
-            ->expandWithBrandAssignmentForms($builder, $options);
+            ->expandWithBrandAssignmentForms($builder);
 
         return $this;
     }

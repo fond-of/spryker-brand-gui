@@ -14,8 +14,6 @@ class AvailableCompanyTable extends AbstractCompanyTable
     /**
      * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $companyQuery
      *
-     * @throws
-     *
      * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
      */
     protected function filterQuery(SpyCompanyQuery $companyQuery): SpyCompanyQuery

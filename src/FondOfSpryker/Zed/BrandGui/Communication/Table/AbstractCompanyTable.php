@@ -26,9 +26,8 @@ abstract class AbstractCompanyTable extends AbstractTable
     /**
      * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $spyCompanyQuery
      */
-    public function __construct(
-        SpyCompanyQuery $spyCompanyQuery
-    ) {
+    public function __construct(SpyCompanyQuery $spyCompanyQuery)
+    {
         $this->spyCompanyQuery = $spyCompanyQuery;
         $this->defaultUrl = static::DEFAULT_URL;
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
@@ -84,7 +83,7 @@ abstract class AbstractCompanyTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $spyCompanyQuery = $this->buildQuery();
         $queryResults = $this->runQuery($spyCompanyQuery, $config);
@@ -118,8 +117,6 @@ abstract class AbstractCompanyTable extends AbstractTable
     }
 
     /**
-     * @throws
-     *
      * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
      */
     protected function buildQuery(): SpyCompanyQuery
@@ -146,7 +143,7 @@ abstract class AbstractCompanyTable extends AbstractTable
     /**
      * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $spyCompanyQuery
      *
-     * @return
+     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
      */
     abstract protected function filterQuery(SpyCompanyQuery $spyCompanyQuery): SpyCompanyQuery;
 }

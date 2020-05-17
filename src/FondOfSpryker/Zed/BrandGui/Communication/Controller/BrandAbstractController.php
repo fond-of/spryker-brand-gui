@@ -67,6 +67,8 @@ class BrandAbstractController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\BrandResponseTransfer $brandResponseTransfer
+     *
      * @return void
      */
     protected function addMessagesFromBrandResponseTransfer(BrandResponseTransfer $brandResponseTransfer): void
@@ -83,7 +85,7 @@ class BrandAbstractController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productListAggregateForm
+     * @param \Symfony\Component\Form\FormInterface $brandAggregateForm
      *
      * @return array
      */

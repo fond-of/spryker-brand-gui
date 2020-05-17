@@ -46,7 +46,7 @@ class EditController extends BrandAbstractController
 
         if ($brandResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_BRAND_UPDATE_SUCCESS, [
-                '%s' => $brandTransfer->getTitle(),
+                '%s' => $brandTransfer->getName(),
             ]);
         }
 
@@ -131,8 +131,8 @@ class EditController extends BrandAbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $productListAggregateForm
+     * @param \Generated\Shared\Transfer\BrandTransfer $brandTransfer
+     * @param \Symfony\Component\Form\FormInterface $brandAggregateForm
      *
      * @return array
      */

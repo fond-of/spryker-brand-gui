@@ -12,8 +12,6 @@ class AssignedCompanyTable extends AbstractCompanyTable
     /**
      * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $spyCompanyQuery
      *
-     * @throws
-     *
      * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
      */
     protected function filterQuery(SpyCompanyQuery $spyCompanyQuery): SpyCompanyQuery
