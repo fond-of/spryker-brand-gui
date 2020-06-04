@@ -28,9 +28,8 @@ abstract class AbstractCustomerTable extends AbstractTable
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $spyCustomerQuery
      */
-    public function __construct(
-        SpyCustomerQuery $spyCustomerQuery
-    ) {
+    public function __construct(SpyCustomerQuery $spyCustomerQuery)
+    {
         $this->spyCustomerQuery = $spyCustomerQuery;
         $this->defaultUrl = static::DEFAULT_URL;
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);

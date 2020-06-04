@@ -51,7 +51,7 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBrandPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_FOS_BRAND] = function () {
+        $container[static::PROPEL_QUERY_FOS_BRAND] = static function () {
             return FosBrandQuery::create();
         };
 
@@ -65,7 +65,7 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CUSTOMER] = function () {
+        $container[static::PROPEL_QUERY_CUSTOMER] = static function () {
             return SpyCustomerQuery::create();
         };
 
@@ -79,7 +79,7 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_COMPANY] = function () {
+        $container[static::PROPEL_QUERY_COMPANY] = static function () {
             return SpyCompanyQuery::create();
         };
 
@@ -93,7 +93,7 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
+        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = static function () {
             return SpyProductAbstractQuery::create();
         };
 
@@ -107,7 +107,7 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBrandFacade(Container $container): Container
     {
-        $container[static::FACADE_BRAND] = function (Container $container) {
+        $container[static::FACADE_BRAND] = static function (Container $container) {
             return new BrandGuiToBrandFacadeBridge($container->getLocator()->brand()->facade());
         };
 
@@ -121,7 +121,7 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container[static::FACADE_CUSTOMER] = static function (Container $container) {
             return new BrandGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
@@ -135,16 +135,21 @@ class BrandGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container[static::FACADE_COMPANY] = static function (Container $container) {
             return new BrandGuiToCompanyFacadeBridge($container->getLocator()->company()->facade());
         };
 
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_PRODUCT] = static function (Container $container) {
             return new BrandGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 

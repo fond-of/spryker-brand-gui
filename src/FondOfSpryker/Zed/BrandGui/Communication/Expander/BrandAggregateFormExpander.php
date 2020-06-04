@@ -43,6 +43,8 @@ class BrandAggregateFormExpander implements BrandAggregateFormExpanderInterface
     }
 
     /**
+     * @param \Symfony\Component\Form\FormEvent $formEvent
+     *
      * @return void
      */
     protected function getCustomerData(FormEvent $formEvent): void
@@ -71,6 +73,8 @@ class BrandAggregateFormExpander implements BrandAggregateFormExpanderInterface
     }
 
     /**
+     * @param \Symfony\Component\Form\FormEvent $formEvent
+     *
      * @return void
      */
     protected function getCompanyData(FormEvent $formEvent): void
@@ -99,6 +103,8 @@ class BrandAggregateFormExpander implements BrandAggregateFormExpanderInterface
     }
 
     /**
+     * @param \Symfony\Component\Form\FormEvent $formEvent
+     *
      * @return void
      */
     protected function getProductAbstractData(FormEvent $formEvent): void

@@ -11,6 +11,11 @@ class AvailableProductAbstractTable extends AbstractProductAbstractTable
     protected const DEFAULT_URL = 'available-product-abstract-table';
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
     protected function filterQuery(SpyProductAbstractQuery $productAbstractQuery): SpyProductAbstractQuery
     {
         if ($this->getIdBrand()) {

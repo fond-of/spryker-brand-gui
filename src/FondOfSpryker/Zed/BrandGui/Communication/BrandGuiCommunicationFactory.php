@@ -195,6 +195,12 @@ class BrandGuiCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\BrandAggregateFormTransfer|null $brandAggregateFormTransfer
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function getBrandAggregateForm(
         ?BrandAggregateFormTransfer $brandAggregateFormTransfer = null,
         array $options = []

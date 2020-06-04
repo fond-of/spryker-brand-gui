@@ -136,7 +136,7 @@ class EditController extends BrandAbstractController
      *
      * @return array
      */
-    protected function executeEditAction(brandTransfer $brandTransfer, FormInterface $brandAggregateForm)
+    protected function executeEditAction(BrandTransfer $brandTransfer, FormInterface $brandAggregateForm)
     {
         $data = $this->prepareTemplateVariables($brandAggregateForm);
         $data['idBrand'] = $brandTransfer->getIdBrand();
